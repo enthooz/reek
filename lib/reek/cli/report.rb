@@ -54,5 +54,22 @@ module Reek
         @smell_count > 0 ? "#{header(@desc, @smell_count)}:\n#{format_list(@warnings)}\n" : ''
       end
     end
+
+    class ShowLineReport < VerboseReport
+
+      def initialize(examiner)
+        super(examiner)
+      end
+
+      def report
+        super
+      end
+
+      def format_list(warnings)
+        warnings.map do |warning|
+          "  #{warning.lines}:#{warning.context} #{warning.message} (#{warning.subclass})"
+        end.join("\n")
+      end
+    end
   end
 end
